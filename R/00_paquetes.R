@@ -7,7 +7,8 @@ paquetes <- c(
   "ggplot2",    # gráficos
   "sf",         # mapas
   "redatamx",   # leer bases REDATAM (CELADE/CEPAL)
-  "jsonlite"    # leer la API del sitio del Censo 2025
+  "jsonlite",   # leer la API del sitio del Censo 2025
+  "writexl"     # exportar a Excel
 )
 
 faltantes <- setdiff(paquetes, rownames(installed.packages()))
