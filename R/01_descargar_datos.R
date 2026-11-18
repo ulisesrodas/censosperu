@@ -7,7 +7,15 @@ options(timeout = 3600)
 censos <- c("2007", "2017")
 url_base <- "https://prod.redatam.org/cdr/descargas/censos/poblacion/CP%sPER.zip"
 
+# Diccionario de cada base: si ya existe, la base está descargada
+diccionarios <- c("2007" = "data/raw/2007/CP2007PER/BasePub/CPV2007PER_PUB.dicx",
+                  "2017" = "data/raw/2017/BaseD/BaseR/CPVPER2017D.dicX")
+
 for (anio in censos) {
+  if (file.exists(diccionarios[[anio]])) {
+    message("Censo ", anio, " ya descargado.")
+    next
+  }
   destino <- file.path("data", "raw", anio)
   zip <- file.path(destino, sprintf("CP%sPER.zip", anio))
   dir.create(destino, recursive = TRUE, showWarnings = FALSE)
@@ -18,6 +26,7 @@ for (anio in censos) {
   }
   message("Descomprimiendo censo ", anio, "...")
   unzip(zip, exdir = destino)
+  unlink(zip)  # el ZIP ya no hace falta
 }
 
 # El video promocional de 2007 no se necesita (~80 MB)

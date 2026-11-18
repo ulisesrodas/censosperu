@@ -11,5 +11,6 @@ paquetes <- c(
 
 faltantes <- setdiff(paquetes, rownames(installed.packages()))
 if (length(faltantes) > 0) {
-  install.packages(faltantes, repos = "https://cloud.r-project.org")
+  install.packages(faltantes, repos = "https://cloud.r-project.org",
+                   Ncpus = parallel::detectCores())
 }
