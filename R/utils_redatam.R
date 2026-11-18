@@ -18,6 +18,10 @@ bases_censo <- list(
 
 #' Crea enlaces simbólicos en minúsculas para los archivos de una base REDATAM.
 preparar_base <- function(dir) {
+  # Windows y macOS no distinguen mayúsculas de minúsculas: no hace falta
+  if (.Platform$OS.type == "windows" || Sys.info()[["sysname"]] == "Darwin") {
+    return(invisible(dir))
+  }
   archivos <- list.files(dir)
   for (f in archivos) {
     minus <- tolower(f)
