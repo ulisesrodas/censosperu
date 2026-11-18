@@ -1,0 +1,17 @@
+# Datos pesados del INEI: no se suben al repositorio
+data/raw/**
+!data/raw/**/
+!data/raw/FUENTES.md
+!data/raw/**/.gitkeep
+data/processed/*.parquet
+data/processed/*.csv
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# Sistema
+.DS_Store
+Thumbs.db
