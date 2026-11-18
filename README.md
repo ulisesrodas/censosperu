@@ -12,33 +12,41 @@ realizados por el INEI:
 ## Estructura
 
 ```
+R/                               Scripts de R (descarga, limpieza, funciones)
+analisis/                        Documentos de análisis (Quarto / R Markdown)
 data/
-  raw/2007, raw/2017, raw/2025   Archivos originales del INEI (no se suben a git)
-  processed/                     Tablas limpias y armonizadas entre censos
+  raw/2007, raw/2017, raw/2025   Bases originales (no se suben a git)
+  processed/                     Tablas limpias y armonizadas por distrito
   reference/                     Tablas de apoyo: ubigeos, equivalencias de distritos
-notebooks/                       Exploración y análisis
-src/censos_peru/                 Código reutilizable (carga, limpieza, armonización)
+docs/                            Documentación (comparabilidad de variables, etc.)
 outputs/figures, outputs/tables  Gráficos y tablas finales
 dashboard/                       Página web con los resultados
 ```
 
 ## Instalación
 
+Requiere R 4.3 o superior.
+
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+Rscript R/00_paquetes.R          # instala los paquetes
+Rscript R/01_descargar_datos.R   # descarga las bases 2007 y 2017 (~1,2 GB)
 ```
+
+O abre `censosperu.Rproj` en RStudio y ejecuta los mismos scripts.
 
 ## Fuentes de datos
 
-- **2007 y 2017:** microdatos y consultas REDATAM del INEI.
+- **2007 y 2017:** bases completas (todo el universo censado) en formato REDATAM,
+  distribuidas por CELADE/CEPAL en [redatam.org](https://redatam.org/en/microdatos)
+  y validadas por el INEI. Se leen en R con el paquete `redatamx`.
 - **2025:** resultados por departamento, provincia y distrito publicados por el INEI.
   Falta confirmar si ya hay microdatos disponibles.
 
-Coloca los archivos descargados en `data/raw/<año>/`. Los archivos de datos
-pesados están excluidos de git (ver `.gitignore`); anota en
-`data/raw/FUENTES.md` de dónde salió cada archivo y en qué fecha se descargó.
+Las bases pesadas están excluidas de git (ver `.gitignore`). Cada archivo se anota en
+`data/raw/FUENTES.md` con su origen y fecha de descarga.
+
+La comparabilidad de cada variable entre los tres censos está documentada en
+[`docs/comparabilidad_variables.md`](docs/comparabilidad_variables.md).
 
 ## Puntos de cuidado al comparar censos
 
