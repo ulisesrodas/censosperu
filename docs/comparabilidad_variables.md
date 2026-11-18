@@ -48,37 +48,30 @@ para comparar hay que usar la **población censada**.
 
 (P = pregunta de la sección de población; V = sección de vivienda; H = sección de hogar.)
 
-## Disponibilidad de 2025 a nivel distrital
+## Variables comparables en los tres censos, a nivel distrital
 
-Para 2025 no hay microdatos; se usan los **tabulados oficiales del INEI** por distrito
-(https://censos2025.inei.gob.pe/descarga-de-datos, descargados con `R/03_descargar_2025.R`).
-2007 y 2017 se calculan desde las bases REDATAM completas.
+Solo se incluyen las variables pedidas que pueden compararse en 2007, 2017 y 2025 por distrito.
+2007 y 2017 se calculan desde las bases REDATAM completas; 2025 desde los **tabulados oficiales
+del INEI** por distrito (https://censos2025.inei.gob.pe/descarga-de-datos, descargados con
+`R/03_descargar_2025.R`), ya que no hay microdatos.
 
-| Variable | ¿Está en los tabulados 2025 por distrito? | Archivo / cuadro |
-|----------|-------------------------------------------|------------------|
-| Población total, censada y omitida | ✅ | Indicadores demográficos, C1 |
-| Edad (edades simples y grupos) | ✅ | Indicadores demográficos, C2 y C3 |
-| % población rural | ✅ | Indicadores demográficos, C2 (área urbana/rural) |
-| Migración (hace 5 años, lugar de nacimiento) | ❌ por distrito; solo origen por departamento/provincia | Indicadores demográficos, C7 y C8 |
-| Lengua aprendida en la niñez | ✅ | Etnicidad, C11 (y C12: número de lenguas) |
-| Autoidentificación étnica (12+) | ✅ | Etnicidad, C10 |
-| Analfabetismo | ✅ | Educación, C4 (por grupo de edad → 15+) |
-| Nivel educativo | ✅ | Educación, C1 |
-| PEA por rama de actividad | ❌ no publicado | — |
-| Categoría de ocupación | ❌ no publicado | — |
-| Seguro de salud (SIS / EsSalud) | ✅ | Estado civil, identidad y seguro de salud, C6 |
-| Agua por red pública | ✅ | Servicios básicos de la vivienda, C1 |
-| Desagüe / servicio higiénico | ✅ | Servicios básicos de la vivienda, C9 |
-| Electricidad por red pública | ✅ | Servicios básicos de la vivienda, C10 |
-| Celular e internet en el hogar | ✅ | Equipamiento del hogar, C1 y C2 |
-| Religión | ❌ no se preguntó | — |
+| Variable | 2007 (REDATAM) | 2017 (REDATAM) | 2025 (tabulado) | Nota |
+|----------|----------------|----------------|-----------------|------|
+| Tamaño de población (censada) | `Poblacio` (conteo) | `PERSONA` (conteo) | Indicadores demográficos, C1 | Usar población censada; 2007/2017 de hecho, 2025 de derecho |
+| Grupos etarios | `P03AANIO` | `C5P41` | Indicadores demográficos, C2 (edades simples) | |
+| % población rural | `PAREA` | `PAREA` | Indicadores demográficos, C2 | Confirmar definición urbano/rural 2025 |
+| Densidad poblacional | — | — | — | Población / superficie del distrito (INEI/IGN) |
+| % lengua materna indígena | `P09IDIOMA` | `C5P11` | Etnicidad, C11 | 2025 admite varias lenguas |
+| % analfabetismo (15+) | `P10LEE` | `C5P12` | Educación, C4 | |
+| % educación superior (25+) | `P11ANIVEL` | `C5P13NIV` | Educación, C1 | |
+| % SIS y % EsSalud | `P08AFILIA` | `C5P81`, `C5P82` | Estado civil, identidad y seguro de salud, C6 | |
+| % viviendas sin agua por red pública | `V04ABASAGU` | `C2P6` | Servicios básicos de la vivienda, C1 | |
+| % viviendas sin desagüe por red pública | `V06SERVHIG` | `C2P10` | Servicios básicos de la vivienda, C9 | |
+| % viviendas sin electricidad por red pública | `V07ALUMBRA` | `C2P11` | Servicios básicos de la vivienda, C10 | |
+| % hogares con celular | `H01BSERV` | `C3P210` | Equipamiento del hogar, C2 | |
+| % hogares con internet | `H01BSERV` | `C3P213` | Equipamiento del hogar, C2 | En 2025 usar internet fijo |
 
-Los tabulados de "Población en edad de trabajar" no incluyen condición de actividad,
-ocupación ni rama, por lo que los indicadores de empleo de 2025 quedan pendientes hasta que el
-INEI publique esos cuadros o los microdatos. La consulta REDATAM en línea del INEI para 2025
-(redatamcpv2025.inei.gob.pe) podría permitir obtenerlos; falta revisarla.
-
-Los nombres de distritos en los tabulados no traen ubigeo: hay que asignarlo por nombre de
+Los nombres de distritos en los tabulados 2025 no traen ubigeo: hay que asignarlo por nombre de
 departamento, provincia y distrito. El anexo de cada archivo lista leyes de demarcación de 2026
 que cambiaron límites, por lo que algunos distritos no coincidirán con 2017.
 
