@@ -35,3 +35,6 @@ unlink(file.path("data", "raw", "2007", "CP2007PER", "Docs", "CPV2007.mpg"))
 # Enlaces en minúsculas que necesita el motor REDATAM en Linux
 source("R/utils_redatam.R")
 for (b in bases_censo) preparar_base(b$dir)
+
+# Tabulados distritales del Censo 2025 (INEI)
+source("R/03_descargar_2025.R")
