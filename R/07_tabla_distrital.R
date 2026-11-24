@@ -10,8 +10,17 @@ library(writexl)
 
 pct <- function(num, den) ifelse(den > 0, round(100 * num / den, 2), NA_real_)
 
+# Población total con omisión estimada por el INEI:
+# - 2017: anexo de "Perú: Crecimiento y distribución de la población total, 2017" (INEI),
+#   guardado en data/reference/poblacion_total_2017_inei.csv
+# - 2025: tabulados distritales (R/06_indicadores_2025.R)
+# - 2007: el INEI solo la publicó a nivel nacional y departamental -> queda vacía
+total_2017 <- read.csv("data/reference/poblacion_total_2017_inei.csv", colClasses = c(ubigeo = "character"))
+
 completar <- function(d, anio) {
   d$anio <- anio
+  if (anio == 2007) d$pob_total_con_omision <- NA_real_
+  if (anio == 2017) d$pob_total_con_omision <- total_2017$pob_total_con_omision[match(d$ubigeo, total_2017$ubigeo)]
   d$pct_0_14 <- pct(d$pob_0_14, d$pob_censada)
   d$pct_15_64 <- pct(d$pob_15_64, d$pob_censada)
   d$pct_65_mas <- pct(d$pob_65_mas, d$pob_censada)
@@ -30,7 +39,7 @@ completar <- function(d, anio) {
   columnas <- c(
     "ubigeo", "anio", "departamento", "provincia", "distrito",
     # Demografía
-    "pob_censada", "pob_0_14", "pob_15_64", "pob_65_mas", "pct_0_14", "pct_15_64", "pct_65_mas",
+    "pob_censada", "pob_total_con_omision", "pob_0_14", "pob_15_64", "pob_65_mas", "pct_0_14", "pct_15_64", "pct_65_mas",
     # Territorio
     "pob_rural", "pct_rural",
     # Lengua

@@ -1,6 +1,6 @@
 # Diccionario de las tablas distritales por censo
 
-Archivos (uno por censo, mismas columnas, una fila por distrito):
+Archivos (uno por censo, mismas 40 columnas, una fila por distrito):
 
 | Archivo | Distritos | Fuente |
 |---------|-----------|--------|
@@ -30,6 +30,7 @@ decimales) calculados como numerador / denominador × 100.
 | `anio` | Año del censo | |
 | `departamento`, `provincia`, `distrito` | Nombres oficiales de ese censo | |
 | `pob_censada` | Población censada (sin omisión estimada) | |
+| `pob_total_con_omision` | Población total estimada por el INEI: censada + omitida. **Vacía en 2007** (ver abajo) | |
 | `pob_0_14`, `pob_15_64`, `pob_65_mas` | Población por grandes grupos de edad (años cumplidos) | `pob_censada` |
 | `pob_rural` | Población en área rural | `pob_censada` |
 | `pob_3_mas` | Población de 3 años y más | |
@@ -47,7 +48,29 @@ decimales) calculados como numerador / denominador × 100.
 | `hog_celular` | Hogares con teléfono celular | `hogares` |
 | `hog_internet` | Hogares con conexión a internet (2025: internet fijo) | `hogares` |
 
+## Población total con omisión
+
+Ningún censo registra a todas las personas; el INEI estima cuántas quedaron sin censar.
+
+| Censo | Censada | Omitida | Total | Omisión | ¿Por distrito? |
+|-------|---------|---------|-------|---------|----------------|
+| 2007 | 27.412.157 | 808.607 | 28.220.764 | 2,9 % | No: solo nacional y departamental |
+| 2017 | 29.381.884 | 1.855.501 | 31.237.385 | 5,94 % | Sí |
+| 2025 | 32.706.028 | 1.451.704 | 34.157.732 | 4,25 % | Sí |
+
+- **2017:** anexo de *Perú: Crecimiento y distribución de la población total, 2017* (INEI), guardado en
+  `data/reference/poblacion_total_2017_inei.csv`.
+- **2025:** tabulados distritales del INEI (Indicadores demográficos, cuadro 1).
+- **Cuándo usarla:** para cantidades absolutas y crecimiento poblacional. Los porcentajes se calculan
+  con la población censada, porque el INEI estima cuántas personas faltan pero no sus características.
+- **Livitaca y Velille (Cusco, 080705 y 080708):** la población censada de la publicación del INEI
+  (10.378 y 9.143) difiere de la base REDATAM (11.690 y 7.831), aunque la suma de ambos distritos es
+  igual (19.521). La `pob_total_con_omision` de 2017 corresponde a las cifras de la publicación.
+
 ## Diferencias entre censos que afectan la comparación
+
+- **Carmen Alto (Ayacucho, 050104) no está en 2007:** las autoridades locales no permitieron el censo
+  en ese distrito, según el INEI. Por eso 2007 tiene un distrito menos y su total nacional no lo incluye.
 
 - **De hecho vs. de derecho:** 2007 y 2017 cuentan a las personas donde durmieron la noche
   anterior al censo; 2025, donde viven habitualmente. Afecta a todos los conteos, sobre todo en

@@ -81,6 +81,13 @@ indicadores_region <- function(cod) {
                pob_65_mas = sum(g[ei >= 65, 2]))
   }))
 
+  # Población total con omisión estimada (Indicadores demográficos, C1):
+  # columna 2 = población total, columna 5 = población censada
+  totales <- t(sapply(leer_bloques(cod, "poblacion/Indicadores_demograficos.xlsx", 1),
+                      function(b) c(total = b$datos[1, 2], censada = b$datos[1, 5])))
+  stopifnot(all(totales[, "censada"] == base$pob_censada))
+  base$pob_total_con_omision <- totales[, "total"]
+
   # Lengua aprendida en la niñez, 3+ (Etnicidad, C11). Respuesta múltiple: se suman
   # las lenguas indígenas (puede sobrestimar a quienes aprendieron dos lenguas indígenas).
   indigenas <- c("Quechua", "Aimara", "Ashaninka", "Awajún / Aguaruna", "Shipibo - Konibo",

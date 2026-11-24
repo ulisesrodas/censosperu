@@ -38,11 +38,15 @@ distrito**, con un proyecto accesible desde varios dispositivos.
 
 Los totales calculados coinciden con las cifras oficiales del INEI:
 
-| Censo | Población censada | Distritos |
-|-------|-------------------|-----------|
-| 2007 | 27.412.157 | 1.833 |
-| 2017 | 29.381.884 | 1.874 |
-| 2025 | 32.706.028 (34.157.732 con omisión estimada) | 1.893 |
+| Censo | Población censada | Población total con omisión | Distritos |
+|-------|-------------------|-----------------------------|-----------|
+| 2007 | 27.412.157 | 28.220.764 (solo nacional y departamental) | 1.833 |
+| 2017 | 29.381.884 | 31.237.385 (también por distrito) | 1.874 |
+| 2025 | 32.706.028 | 34.157.732 (también por distrito) | 1.893 |
+
+Un censo no es una muestra, así que no hay factor de expansión: los datos ya son de toda la
+población. Lo único parecido es la población omitida que estima el INEI; se agregó como columna
+`pob_total_con_omision` para 2017 y 2025.
 
 ## 5. Variables
 
@@ -82,6 +86,7 @@ Los totales calculados coinciden con las cifras oficiales del INEI:
 - **De hecho vs. de derecho:** 2007 y 2017 registraron a las personas donde durmieron la noche
   anterior al censo; 2025, donde viven habitualmente. Afecta sobre todo a distritos con
   población de paso.
+- **Carmen Alto (Ayacucho) no está en 2007:** las autoridades locales no permitieron el censo.
 - **Distritos que cambian:** 2025 tiene 19 distritos nuevos respecto a 2017; 2017 tiene 44
   códigos que no existían en 2007, y 3 de 2007 ya no existen.
 - **Lengua materna 2025:** se podía marcar más de una lengua; el dato es una aproximación.
